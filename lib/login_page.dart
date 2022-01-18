@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -237,12 +235,13 @@ class _LoginPageState extends State<LoginPage> {
                                               child: Text(
                                                 'Login',
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
+                                                  fontSize: 20.0,
                                                   color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 10.0),
+                                          SizedBox(width: 20.0),
                                           Expanded(
                                             child: ElevatedButton(
                                               onPressed: () {
