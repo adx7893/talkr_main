@@ -1,4 +1,4 @@
-# talkr_demo
+# talkr_main
 
 A new Flutter project.
 
