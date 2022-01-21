@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'main.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -12,6 +14,57 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool _isSigningOut = true;
+  List<String> _options = ["HOME", "SEARCH", "POST", "LIKES", "PROFILE"];
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.black),
+      body: Container(
+        color: Colors.black,
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        buttonBackgroundColor: Colors.black,
+        backgroundColor: Colors.black,
+        animationDuration: Duration(seconds: 1),
+        animationCurve: Curves.easeOut,
+        items: <Widget>[
+          Icon(Icons.home_filled, color: Colors.deepPurpleAccent),
+          Icon(
+            Icons.search_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.add_a_photo_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.favorite_border_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.person,
+            color: Colors.deepPurpleAccent,
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+    );
+  }
+}
+
+/*class _ProfilePageState extends State<ProfilePage> {
   bool _isSigningOut = false;
 
   @override
@@ -62,4 +115,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-}
+}*/
