@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talkr_demo/splash_screen.dart';
+import 'package:talkr_demo/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
