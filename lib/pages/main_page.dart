@@ -1,135 +1,132 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:talkr_demo/screens/like_screen.dart';
-import 'package:talkr_demo/screens/post_screen.dart';
-import 'package:talkr_demo/screens/feed_screen.dart';
-import 'package:talkr_demo/screens/search_screen.dart';
-import '../screens/profile_screen.dart';
+import 'package:talkr_demo/pages/register_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class MainPage extends StatefulWidget {
-  final User user;
+import 'login_page.dart';
 
-  const MainPage({required this.user});
+class aaa extends StatefulWidget {
+  const aaa({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _aaaState createState() => _aaaState();
 }
 
-class _MainPageState extends State<MainPage> {
-  bool _isSigningOut = true;
-  List<String> _options = ["HOME", "SEARCH", "POST", "LIKES", "PROFILE"];
-  final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 1;
-  final screens = [
-    FeedScreen(),
-    SearchScreen(),
-    PostScreen(),
-    LikeScreen(),
-    ProfileScreen()
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final items = <Widget>[
-      Icon(Icons.home_filled),
-      Icon(Icons.search_rounded),
-      Icon(Icons.add_a_photo_rounded),
-      Icon(Icons.favorite_border_rounded),
-      Icon(Icons.person),
-    ];
-    return Scaffold(
-      body: screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context)
-            .copyWith(iconTheme: IconThemeData(color: Colors.white)),
-        child: CurvedNavigationBar(
-          key: navigationKey,
-          index: index,
-          buttonBackgroundColor: Colors.black,
-          backgroundColor: Colors.transparent,
-          animationDuration: Duration(milliseconds: 400),
-          animationCurve: Curves.easeOut,
-          items: <Widget>[
-            Icon(Icons.home_filled, color: Colors.deepPurpleAccent),
-            Icon(
-              Icons.search_rounded,
-              color: Colors.deepPurpleAccent,
-            ),
-            Icon(
-              Icons.add_a_photo_rounded,
-              color: Colors.deepPurpleAccent,
-            ),
-            Icon(
-              Icons.favorite_border_rounded,
-              color: Colors.deepPurpleAccent,
-            ),
-            Icon(
-              Icons.person,
-              color: Colors.deepPurpleAccent,
-            ),
-          ],
-          onTap: (index) => setState(() => this.index = index),
-        ),
-      ),
-    );
-  }
-}
-
-/*class _ProfilePageState extends State<ProfilePage> {
-  bool _isSigningOut = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _aaaState extends State<aaa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Welcome to your profile"),
-            SizedBox(height: 500.0),
-            _isSigningOut
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningOut = true;
-                      });
-
-                      await FirebaseAuth.instance.signOut();
-                      setState(() {
-                        _isSigningOut = false;
-                      });
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      );
-                    },
-                    child: Text('Sign out'),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+          children: <Widget>[
+            Container(
+              height: 350,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background.png'),
+                      fit: BoxFit.fill)),
+              child: Stack(children: <Widget>[
+                Positioned(
+                  left: 30,
+                  width: 80,
+                  height: 150,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/light-1.png'))),
+                  ),
+                ),
+                Positioned(
+                  left: 140,
+                  width: 80,
+                  height: 100,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/light-2.png'))),
+                  ),
+                ),
+                Positioned(
+                  right: 40,
+                  top: 40,
+                  width: 80,
+                  height: 100,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/clock.jpeg'))),
+                  ),
+                ),
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 90.0), //do not change anything in this line
+                    child: Center(
+                      child: Text(
+                        "Talkr",
+                        style: GoogleFonts.montserrat(
+                            color: Colors.deepPurpleAccent,
+                            fontWeight: FontWeight.w200,
+                            fontSize: 80,
+                            fontStyle: FontStyle.normal),
                       ),
                     ),
                   ),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurpleAccent,
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50))),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurpleAccent,
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50))),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
   }
-}*/
+}
+
+
+
+/**/

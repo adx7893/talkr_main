@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:talkr_demo/pages/login_page.dart';
@@ -10,6 +12,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String myEmail;
+  late String name;
   bool _isSigningOut = false;
 
   @override
@@ -19,47 +23,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Profile'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        title: const Text('Profile'),
+        actions: [
+          _isSigningOut
+              ? const CircularProgressIndicator()
+              : FlatButton.icon(
+                  onPressed: () async {
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+
+                    await FirebaseAuth.instance.signOut();
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  label: const Text(
+                    'Sign out',
+                    style: TextStyle(color: Colors.deepPurpleAccent),
+                  ),
+                ),
+        ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Welcome to your profile"),
-            SizedBox(height: 500.0),
-            _isSigningOut
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningOut = true;
-                      });
-
-                      await FirebaseAuth.instance.signOut();
-                      setState(() {
-                        _isSigningOut = false;
-                      });
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Sign out',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurpleAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                  ),
-          ],
-        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Text(
+            "Signed In User: ",
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            user.email!,
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+        ]),
       ),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'chat_screen.dart';
 
@@ -12,17 +14,23 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
-        title: Text("Feed Page"),
+        title: const Text(
+          "Feed Page",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.send_rounded,
-              color: Colors.white,
+              color: Colors.deepPurpleAccent,
             ),
             onPressed: () {
-              ChatScreen();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const ChatScreen()));
             },
           )
         ],
@@ -30,7 +38,12 @@ class _FeedScreenState extends State<FeedScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Feed")],
+          children: const [
+            Text(
+              "Feed",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )
+          ],
         ),
       ),
     );

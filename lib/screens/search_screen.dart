@@ -11,8 +11,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Search Page",
         ),
         backgroundColor: Colors.black,
@@ -20,7 +21,12 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Search")],
+          children: const [
+            Text(
+              "Search",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )
+          ],
         ),
       ),
     );

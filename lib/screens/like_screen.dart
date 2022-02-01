@@ -11,16 +11,23 @@ class _LikeScreenState extends State<LikeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
-          "Likes",
+        automaticallyImplyLeading: false,
+        title: const Text(
+          "Like Page",
         ),
         backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Like")],
+          children: const [
+            Text(
+              "Like",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )
+          ],
         ),
       ),
     );

@@ -1,192 +1,252 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:talkr_demo/pages/main_page.dart';
-import 'package:talkr_demo/fire_auth.dart';
-import 'package:talkr_demo/validator.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../validator.dart';
+import 'google_sign_in.dart';
+import '../screens/main_screen.dart';
+import 'package:talkr_demo/methods.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-    with TickerProviderStateMixin {
-  final _registerFormKey = GlobalKey<FormState>();
-
-  final _nameTextController = TextEditingController();
-  final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
-  final _focusName = FocusNode();
-  final _focusEmail = FocusNode();
-  final _focusPassword = FocusNode();
-
-  bool _isProcessing = false;
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _focusName.unfocus();
-        _focusEmail.unfocus();
-        _focusPassword.unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.indigoAccent,
-          elevation: 10,
-          title: Text(
-            'Register',
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.black54,
-            ),
-          ),
+    final size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Register",
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/background.png"),
-              fit: BoxFit.none,
-            ),
-          ),
-          padding: EdgeInsets.all(20.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Form(
-                  key: _registerFormKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _nameTextController,
-                        focusNode: _focusName,
-                        validator: (value) => Validator.validateName(
-                          name: value,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                          hintText: "Name",
-                          hintStyle:
-                              TextStyle(fontSize: 17.0, color: Colors.white),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(60.0),
-                              borderSide: BorderSide(color: Colors.red)),
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(600.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
-                            ),
-                          ),
+        backgroundColor: Colors.deepPurpleAccent,
+      ),
+      body: isLoading
+          ? Center(
+              child: Container(
+                height: size.height / 20,
+                width: size.height / 20,
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    height: 350,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/background.png'),
+                            fit: BoxFit.fill)),
+                    child: Stack(children: <Widget>[
+                      Positioned(
+                        left: 30,
+                        width: 80,
+                        height: 150,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/light-1.png'))),
                         ),
                       ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        controller: _emailTextController,
-                        focusNode: _focusEmail,
-                        validator: (value) => Validator.validateEmail(
-                          email: value,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                          hintText: "Email",
-                          hintStyle:
-                              TextStyle(fontSize: 17.0, color: Colors.white),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(60.0),
-                              borderSide: BorderSide(color: Colors.red)),
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(600.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
-                            ),
-                          ),
+                      Positioned(
+                        left: 140,
+                        width: 80,
+                        height: 100,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/light-2.png'))),
                         ),
                       ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        controller: _passwordTextController,
-                        focusNode: _focusPassword,
-                        obscureText: true,
-                        validator: (value) => Validator.validatePassword(
-                          password: value,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                          hintText: "Password",
-                          hintStyle:
-                              TextStyle(fontSize: 17.0, color: Colors.white),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(60.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              )),
-                          errorBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(600.0),
-                            borderSide: BorderSide(
-                              color: Colors.red,
-                            ),
-                          ),
+                      Positioned(
+                        right: 40,
+                        top: 40,
+                        width: 80,
+                        height: 100,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/clock.jpeg'))),
                         ),
                       ),
-                      SizedBox(height: 32.0),
-                      _isProcessing
-                          ? CircularProgressIndicator(
-                              backgroundColor: Colors.transparent,
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            )
-                          : Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      setState(() {
-                                        _isProcessing = true;
-                                      });
-
-                                      if (_registerFormKey.currentState!
-                                          .validate()) {
-                                        User? user = await FireAuth
-                                            .registerUsingEmailPassword(
-                                          name: _nameTextController.text,
-                                          email: _emailTextController.text,
-                                          password:
-                                              _passwordTextController.text,
-                                        );
-
-                                        setState(() {
-                                          _isProcessing = false;
-                                        });
-
-                                        if (user != null) {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainPage(user: user),
-                                            ),
-                                            ModalRoute.withName('/'),
-                                          );
-                                        }
-                                      }
-                                    },
-                                    child: Text(
-                                      'Sign up',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                    ],
+                    ]),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              bottom:
+                                  50.0), //do not change anything in this line
+                          child: Center(
+                            child: Text(
+                              "Register",
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.deepPurpleAccent,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 50,
+                                  fontStyle: FontStyle.normal),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Container(
+                            width: size.width,
+                            alignment: Alignment.center,
+                            child:
+                                field(size, "Name", Icons.account_box, _name),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Container(
+                            width: size.width,
+                            alignment: Alignment.center,
+                            child: Center(
+                              child:
+                                  field(size, "Email", Icons.password, _email),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Container(
+                            width: size.width,
+                            alignment: Alignment.center,
+                            child:
+                                field(size, "Password", Icons.lock, _password),
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        customButton(size),
+                        // const SizedBox(width: 12.0),
+                        Center(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.deepPurpleAccent,
+                                onPrimary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                            child: const Text(
+                              'Google',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              final provider =
+                                  Provider.of<GoogleSignInProvider>(context,
+                                      listen: false);
+                              provider.googleLogin();
+                            },
+                          ),
+                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: GestureDetector(
+                        //     onTap: () => Navigator.pop(context),
+                        //     child: const Text(
+                        //       "Login",
+                        //       style: TextStyle(
+                        //         color: Colors.blue,
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.w500,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
+    );
+  }
+
+  Widget customButton(Size size) {
+    return GestureDetector(
+      onTap: () async {
+        if (_name.text.isNotEmpty &&
+            _email.text.isNotEmpty &&
+            _password.text.isNotEmpty) {
+          setState(() {
+            isLoading = true;
+          });
+
+          createAccount(_name.text, _email.text, _password.text).then((user) {
+            if (user != null) {
+              setState(() {
+                isLoading = false;
+              });
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => MainScreen(
+                    user: user,
+                  ),
+                ),
+              );
+              print("Account Created Sucessfull");
+            } else {
+              print("Login Failed");
+              setState(() {
+                isLoading = false;
+              });
+            }
+          });
+        } else {
+          print("Please enter Fields");
+        }
+      },
+      child: Container(
+          height: size.height / 20,
+          width: size.width / 1.2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.deepPurpleAccent,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            "Create Account",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+    );
+  }
+
+  Widget field(
+      Size size, String hintText, IconData icon, TextEditingController cont) {
+    return Container(
+      height: size.height / 15,
+      width: size.width / 1,
+      child: TextField(
+        controller: cont,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.transparent, width: 1.5),
+            borderRadius: BorderRadius.circular(50),
           ),
         ),
       ),

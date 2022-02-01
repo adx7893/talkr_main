@@ -11,8 +11,10 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        automaticallyImplyLeading: false,
+        title: const Text(
           "Post Page",
         ),
         backgroundColor: Colors.black,
@@ -20,7 +22,12 @@ class _PostScreenState extends State<PostScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Post")],
+          children: const [
+            Text(
+              "Post",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )
+          ],
         ),
       ),
     );
