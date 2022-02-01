@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:talkr_demo/fire_auth.dart';
-import 'package:talkr_demo/validator.dart';
-import 'package:talkr_demo/screens/main_screen.dart';
+import 'package:talkr_main/fire_auth.dart';
+import 'package:talkr_main/validator.dart';
+import 'package:talkr_main/screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'google_sign_in.dart';

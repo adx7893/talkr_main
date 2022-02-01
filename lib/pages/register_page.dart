@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../validator.dart';
 import 'google_sign_in.dart';
 import '../screens/main_screen.dart';
-import 'package:talkr_demo/methods.dart';
+import 'package:talkr_main/methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

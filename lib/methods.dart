@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:talkr_demo/chat/DatabaseManager.dart';
+import 'package:talkr_main/chat/DatabaseManager.dart';
 
 Future<User?> createAccount(String name, String email, String password) async {
   FirebaseAuth auth = FirebaseAuth.instance;
