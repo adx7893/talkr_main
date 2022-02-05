@@ -1,7 +1,8 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'chat_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final usersRef = FirebaseFirestore.instance.collection('UserProfile');
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);

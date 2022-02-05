@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:talkr_main/pages/google_sign_in.dart';
-import 'package:talkr_main/screens/splash_screen.dart';
+import 'package:talkr_demo/pages/google_sign_in.dart';
+import 'package:talkr_demo/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

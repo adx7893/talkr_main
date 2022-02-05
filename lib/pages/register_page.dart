@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../validator.dart';
 import 'google_sign_in.dart';
 import '../screens/main_screen.dart';
-import 'package:talkr_main/methods.dart';
+import 'package:talkr_demo/methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _name = TextEditingController();
+  final TextEditingController displayName = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLoading = false;
@@ -110,8 +110,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Container(
                             width: size.width,
                             alignment: Alignment.center,
-                            child:
-                                field(size, "Name", Icons.account_box, _name),
+                            child: field(
+                                size, "Name", Icons.account_box, displayName),
                           ),
                         ),
                         Padding(
@@ -182,14 +182,15 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget customButton(Size size) {
     return GestureDetector(
       onTap: () async {
-        if (_name.text.isNotEmpty &&
+        if (displayName.text.isNotEmpty &&
             _email.text.isNotEmpty &&
             _password.text.isNotEmpty) {
           setState(() {
             isLoading = true;
           });
 
-          createAccount(_name.text, _email.text, _password.text).then((user) {
+          createAccount(displayName.text, _email.text, _password.text)
+              .then((user) {
             if (user != null) {
               setState(() {
                 isLoading = false;

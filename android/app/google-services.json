@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "924872515030",
+    "firebase_url": "https://talkr-demo-default-rtdb.firebaseio.com",
     "project_id": "talkr-demo",
     "storage_bucket": "talkr-demo.appspot.com"
   },

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:talkr_main/screens/like_screen.dart';
-import 'package:talkr_main/screens/post_screen.dart';
-import 'package:talkr_main/screens/feed_screen.dart';
-import 'package:talkr_main/screens/search_screen.dart';
+import 'package:talkr_demo/screens/like_screen.dart';
+import 'package:talkr_demo/screens/post_screen.dart';
+import 'package:talkr_demo/screens/feed_screen.dart';
+import 'package:talkr_demo/screens/search_screen.dart';
 import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {

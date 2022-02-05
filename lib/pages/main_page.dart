@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'register_page.dart';
+import 'package:talkr_demo/pages/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'login_page.dart';
