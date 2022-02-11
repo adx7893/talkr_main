@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   int index = 2;
   final screens = [
     const FeedScreen(),
-    const SearchScreen(),
+    SearchPage(),
     const PostScreen(),
     const LikeScreen(),
     const ProfileScreen()

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseManager {
@@ -14,7 +16,9 @@ class DatabaseManager {
   Future getUsersList() async {
     List itemList = [];
     try {
+      // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
       await profileList.get().then((QuerySnapshot) {
+        // ignore: avoid_function_literals_in_foreach_calls
         QuerySnapshot.docs.forEach((element) {
           itemList.add(element.data());
         });

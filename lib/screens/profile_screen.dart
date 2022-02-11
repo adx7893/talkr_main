@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:talkr_demo/pages/login_page.dart';
+import 'package:talkr_demo/screens/edit_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -75,6 +76,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(
             height: 40,
+          ),
+          Container(
+            color: Colors.teal,
+            child: MaterialButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfile(),
+                    ));
+              },
+              child: Text("Edit Profile"),
+            ),
           ),
         ]),
       ),
