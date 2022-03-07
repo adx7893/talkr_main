@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:talkr_demo/pages/register_page.dart';
+import 'register_page.dart';
+import 'login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'login_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -87,7 +87,7 @@ class _MainPageState extends State<MainPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },
@@ -107,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
+                            builder: (context) => const SignupScreen(),
                           ),
                         );
                       },

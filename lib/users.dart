@@ -13,7 +13,7 @@ class UserManagement {
         .doc(firebaseUser!.uid)
         .set({'email': user.email, 'uid': user.uid})
         .then((value) => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginPage())))
+            MaterialPageRoute(builder: (context) => const LoginScreen())))
         .catchError((e) {
           print(e);
         });

@@ -22,10 +22,12 @@ class _MainScreenState extends State<MainScreen> {
   int index = 2;
   final screens = [
     const FeedScreen(),
-    SearchPage(),
+    const SearchScreen(),
     const PostScreen(),
     const LikeScreen(),
-    const ProfileScreen()
+    ProfileScreen(
+      uid: '',
+    )
   ];
 
   @override
@@ -48,8 +50,8 @@ class _MainScreenState extends State<MainScreen> {
             CurvedNavigationBar(
               key: navigationKey,
               index: index,
-              buttonBackgroundColor: Colors.white,
-              backgroundColor: Colors.black,
+              buttonBackgroundColor: Colors.black,
+              backgroundColor: Colors.white,
               animationDuration: const Duration(milliseconds: 300),
               animationCurve: Curves.easeOut,
               items: const <Widget>[

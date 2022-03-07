@@ -1,72 +1,75 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:talkr_demo/fire_auth.dart';
-import 'package:talkr_demo/validator.dart';
-import 'package:talkr_demo/screens/main_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'google_sign_in.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:talkr_demo/resources/auth_methods.dart';
+import 'package:talkr_demo/responsive/mobile_screen_layout.dart';
+import 'package:talkr_demo/responsive/responsive_layout.dart';
+import 'package:talkr_demo/responsive/web_screen_layout.dart';
+import 'register_page.dart';
+import 'package:talkr_demo/utils/colors.dart';
+import 'package:talkr_demo/utils/global_variable.dart';
+import 'package:talkr_demo/utils/utils.dart';
+import 'package:talkr_demo/widgets/text_field_input.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
-  final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
 
-  final _focusEmail = FocusNode();
-  final _focusPassword = FocusNode();
-
-  bool _isProcessing = false;
-
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => MainScreen(
-            user: user,
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (res == 'success') {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
-      );
-    }
+          (route) => false);
 
-    return firebaseApp;
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      showSnackBar(context, res);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _focusEmail.unfocus();
-        _focusPassword.unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Login",
-          ),
-          backgroundColor: Colors.deepPurpleAccent,
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: <Widget>[
-            Container(
-              height: 350,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/background.png'),
-                      fit: BoxFit.fill)),
-              child: Stack(children: <Widget>[
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Container(
+            height: 350,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/background.png'),
+                    fit: BoxFit.fill)),
+            child: Stack(
+              children: <Widget>[
                 Positioned(
                   left: 30,
                   width: 80,
@@ -98,204 +101,103 @@ class _LoginPageState extends State<LoginPage> {
                             image: AssetImage('assets/images/clock.jpeg'))),
                   ),
                 ),
-              ]),
+              ],
             ),
-            FutureBuilder(
-              future: _initializeFirebase(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom:
-                                  80.0), //do not change anything in this line
-                          child: Center(
-                            child: Text(
-                              "Login",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.deepPurpleAccent,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 50,
-                                  fontStyle: FontStyle.normal),
+          ),
+          Stack(children: [
+            Padding(
+              // padding: MediaQuery.of(context).size.width > webScreenSize
+              //     ? EdgeInsets.symmetric(
+              //         horizontal: MediaQuery.of(context).size.width / 3)
+              //     : const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Container(),
+                    flex: 2,
+                  ),
+                  const SizedBox(
+                    height: 250,
+                  ),
+                  TextFieldInput(
+                    hintText: 'Enter your email',
+                    textInputType: TextInputType.emailAddress,
+                    textEditingController: _emailController,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  TextFieldInput(
+                    hintText: 'Enter your password',
+                    textInputType: TextInputType.text,
+                    textEditingController: _passwordController,
+                    isPass: true,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  InkWell(
+                    child: Container(
+                      child: !_isLoading
+                          ? const Text(
+                              'Log in',
+                            )
+                          : const CircularProgressIndicator(
+                              color: primaryColor,
                             ),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                    onTap: loginUser,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Flexible(
+                    child: Container(),
+                    flex: 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: const Text(
+                          'Dont have an account?',
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const SignupScreen(),
                           ),
                         ),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            children: <Widget>[
-                              TextFormField(
-                                controller: _emailTextController,
-                                focusNode: _focusEmail,
-                                textAlign: TextAlign.center,
-                                validator: (value) => Validator.validateEmail(
-                                  email: value,
-                                ),
-                                decoration: InputDecoration(
-                                  icon: const Icon(
-                                    Icons.email,
-                                    color: Colors.deepPurple,
-                                  ),
-                                  hintText: "Email",
-                                  fillColor: Colors.black12,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.fromLTRB(
-                                      10.0, 5.0, 10.0, 5.0),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.5)),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: const BorderSide(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              TextFormField(
-                                controller: _passwordTextController,
-                                focusNode: _focusPassword,
-                                textAlign: TextAlign.center,
-                                obscureText: true,
-                                validator: (value) =>
-                                    Validator.validatePassword(
-                                  password: value,
-                                ),
-                                decoration: InputDecoration(
-                                  icon: const Icon(
-                                    Icons.lock,
-                                    color: Colors.deepPurple,
-                                  ),
-                                  hintText: "Password",
-                                  fillColor: Colors.black12,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.fromLTRB(
-                                      10.0, 5.0, 10.0, 5.0),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.5)),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: const BorderSide(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              _isProcessing
-                                  ? const CircularProgressIndicator(
-                                      backgroundColor: Colors.transparent,
-                                      color: Colors.black,
-                                      strokeWidth: 2,
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                primary:
-                                                    Colors.deepPurpleAccent,
-                                                onPrimary: Colors.black,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50))),
-                                            onPressed: () async {
-                                              _focusEmail.unfocus();
-                                              _focusPassword.unfocus();
-
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                setState(() {
-                                                  _isProcessing = true;
-                                                });
-
-                                                User? user = await FireAuth
-                                                    .signInUsingEmailPassword(
-                                                  email:
-                                                      _emailTextController.text,
-                                                  password:
-                                                      _passwordTextController
-                                                          .text,
-                                                );
-
-                                                setState(() {
-                                                  _isProcessing = false;
-                                                });
-
-                                                if (user != null) {
-                                                  Navigator.of(context)
-                                                      .pushReplacement(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MainScreen(
-                                                              user: user),
-                                                    ),
-                                                  );
-                                                }
-                                              }
-                                            },
-                                            child: const Text(
-                                              'Login',
-                                              style: TextStyle(
-                                                fontSize: 20.0,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12.0),
-                                        Expanded(
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                primary:
-                                                    Colors.deepPurpleAccent,
-                                                onPrimary: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50))),
-                                            child: const Text(
-                                              'Google',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            onPressed: () {
-                                              final provider = Provider.of<
-                                                      GoogleSignInProvider>(
-                                                  context,
-                                                  listen: false);
-                                              provider.googleLogin();
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    )
-                            ],
+                        child: Container(
+                          child: const Text(
+                            ' Signup.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ]),
-        ),
+        ],
       ),
     );
   }

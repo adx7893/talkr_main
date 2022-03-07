@@ -30,10 +30,11 @@ class _UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        title: Text(
-          "TALKER",
-          style: TextStyle(fontSize: 20),
+        //automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        title: const Text(
+          "Chat",
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
       body: Container(

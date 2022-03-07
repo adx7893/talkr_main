@@ -11,7 +11,7 @@ class _LikeScreenState extends State<LikeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
@@ -25,7 +25,7 @@ class _LikeScreenState extends State<LikeScreen> {
           children: const [
             Text(
               "Like",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20),
             )
           ],
         ),
