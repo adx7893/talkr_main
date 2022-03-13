@@ -19,13 +19,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   //bool _isSigningOut = true;
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 2;
+  int index = 4;
   final screens = [
     const FeedScreen(),
     const SearchScreen(),
     const PostScreen(),
     const LikeScreen(),
-    ProfileScreen(
+    const ProfileScreen(
       uid: '',
     )
   ];
@@ -41,42 +41,33 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context)
-            .copyWith(iconTheme: const IconThemeData(color: Colors.black)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            CurvedNavigationBar(
-              key: navigationKey,
-              index: index,
-              buttonBackgroundColor: Colors.black,
-              backgroundColor: Colors.white,
-              animationDuration: const Duration(milliseconds: 300),
-              animationCurve: Curves.easeOut,
-              items: const <Widget>[
-                Icon(Icons.home_filled, color: Colors.deepPurpleAccent),
-                Icon(
-                  Icons.search_rounded,
-                  color: Colors.deepPurpleAccent,
-                ),
-                Icon(
-                  Icons.add_a_photo_rounded,
-                  color: Colors.deepPurpleAccent,
-                ),
-                Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.deepPurpleAccent,
-                ),
-                Icon(
-                  Icons.person,
-                  color: Colors.deepPurpleAccent,
-                ),
-              ],
-              onTap: (index) => setState(() => this.index = index),
-            ),
-          ],
-        ),
+      bottomNavigationBar: CurvedNavigationBar(
+        key: navigationKey,
+        index: index,
+        buttonBackgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.white,
+        animationDuration: const Duration(milliseconds: 5000),
+        animationCurve: Curves.bounceIn,
+        items: const <Widget>[
+          Icon(Icons.home_filled, color: Colors.deepPurpleAccent),
+          Icon(
+            Icons.search_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.add_a_photo_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.favorite_border_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.person,
+            color: Colors.deepPurpleAccent,
+          ),
+        ],
+        onTap: (index) => setState(() => this.index = index),
       ),
     );
   }

@@ -1,5 +1,11 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:talkr_demo/screens/feed_screen.dart';
+import 'package:talkr_demo/screens/like_screen.dart';
+import 'package:talkr_demo/screens/post_screen.dart';
+import 'package:talkr_demo/screens/profile_screen.dart';
+import 'package:talkr_demo/screens/search_screen.dart';
 import 'package:talkr_demo/utils/colors.dart';
 import 'package:talkr_demo/utils/global_variable.dart';
 
@@ -11,7 +17,7 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  int _page = 0;
+  int _page = 2;
   late PageController pageController; // for tabs animation
 
   @override
@@ -28,7 +34,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   void onPageChanged(int page) {
     setState(() {
-      _page = page;
+      page = page;
     });
   }
 
@@ -36,6 +42,20 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     //Animating Page
     pageController.jumpToPage(page);
   }
+
+  //final navigationKey = GlobalKey<CurvedNavigationBarState>();
+
+  final screens = [
+    const FeedScreen(),
+    const SearchScreen(),
+    const PostScreen(),
+    const LikeScreen(),
+    const ProfileScreen(
+      uid: '',
+    )
+  ];
+
+  late String myEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -45,50 +65,33 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         controller: pageController,
         onPageChanged: onPageChanged,
       ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+      bottomNavigationBar: CurvedNavigationBar(
+        buttonBackgroundColor: Colors.black,
+        backgroundColor: Colors.black,
+        animationDuration: const Duration(milliseconds: 300),
+        animationCurve: Curves.easeIn,
+        items: const <Widget>[
+          Icon(Icons.home_filled, color: Colors.deepPurpleAccent),
+          Icon(
+            Icons.search_rounded,
+            color: Colors.deepPurpleAccent,
           ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite,
-              color: (_page == 3) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+          Icon(
+            Icons.add_a_photo_rounded,
+            color: Colors.deepPurpleAccent,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 4) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+          Icon(
+            Icons.favorite_border_rounded,
+            color: Colors.deepPurpleAccent,
+          ),
+          Icon(
+            Icons.person,
+            color: Colors.deepPurpleAccent,
           ),
         ],
+        //onTap: (index) => setState(() => this.index = index),
         onTap: navigationTapped,
-        currentIndex: _page,
+        // currentIndex: _page,
       ),
     );
   }

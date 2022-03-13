@@ -13,10 +13,16 @@ class _LikeScreenState extends State<LikeScreen> {
     return Scaffold(
       // backgroundColor: Colors.black,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text(
-          "Like Page",
+          'Likes',
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontFamily: "Neue Helvetica",
+            // fontStyle: FontStyle.italic,
+            fontSize: 23.0,
+          ),
         ),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
       ),
       body: Center(

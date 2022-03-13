@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:talkr_demo/resources/auth_methods.dart';
 import 'package:talkr_demo/responsive/mobile_screen_layout.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:talkr_demo/responsive/responsive_layout.dart';
 import 'package:talkr_demo/responsive/web_screen_layout.dart';
 import 'register_page.dart';
@@ -106,25 +107,31 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Stack(children: [
             Padding(
-              // padding: MediaQuery.of(context).size.width > webScreenSize
-              //     ? EdgeInsets.symmetric(
-              //         horizontal: MediaQuery.of(context).size.width / 3)
-              //     : const EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding:
+                  const EdgeInsets.only(top: 320.0, left: 15.0, right: 20.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
-                    child: Container(),
-                    flex: 2,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 60.0), //do not change anything in this line
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.montserrat(
+                            color: Colors.deepPurpleAccent,
+                            fontWeight: FontWeight.w200,
+                            fontSize: 60,
+                            fontStyle: FontStyle.normal),
+                      ),
+                    ),
                   ),
-                  const SizedBox(
-                    height: 250,
-                  ),
-                  TextFieldInput(
-                    hintText: 'Enter your email',
-                    textInputType: TextInputType.emailAddress,
-                    textEditingController: _emailController,
+                  Center(
+                    child: TextFieldInput(
+                      hintText: 'Enter your email',
+                      textInputType: TextInputType.emailAddress,
+                      textEditingController: _emailController,
+                    ),
                   ),
                   const SizedBox(
                     height: 24,

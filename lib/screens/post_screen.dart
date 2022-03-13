@@ -17,13 +17,21 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     final Storage storage = Storage();
     return Scaffold(
-      // backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        toolbarHeight: 35,
+        backgroundColor: Colors.deepPurpleAccent,
         title: const Text(
-          "Post Page",
+          "Post",
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "Lato",
+            // fontStyle: FontStyle.italic,
+            fontSize: 20.0,
+          ),
         ),
-        backgroundColor: Colors.black,
+        automaticallyImplyLeading: true,
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -39,7 +47,7 @@ class _PostScreenState extends State<PostScreen> {
                   final results = await FilePicker.platform.pickFiles(
                     allowMultiple: false,
                     type: FileType.custom,
-                    allowedExtensions: ['png', 'jpg'],
+                    allowedExtensions: ['png', 'jpg', 'mp4', 'mp3'],
                   );
                   if (results == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -56,7 +64,11 @@ class _PostScreenState extends State<PostScreen> {
                       .uploadFile(path, fileName)
                       .then((value) => print("Done"));
                 },
-                child: Text("upload file"),
+                child: Text(
+                  "Upload Somthing",
+                  style: TextStyle(
+                      color: Colors.white, backgroundColor: Colors.white),
+                ),
               ),
             ),
             // FutureBuilder(

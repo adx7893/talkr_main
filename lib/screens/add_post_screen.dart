@@ -124,31 +124,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: mobileBackgroundColor,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: clearImage,
-              ),
+              toolbarHeight: 35,
+              backgroundColor: Colors.deepPurpleAccent,
               title: const Text(
-                'Post to',
+                "Post",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Lato",
+                  // fontStyle: FontStyle.italic,
+                  fontSize: 20.0,
+                ),
               ),
-              centerTitle: false,
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => postImage(
-                    userProvider.getUser.uid,
-                    userProvider.getUser.username,
-                    userProvider.getUser.photoUrl,
-                  ),
-                  child: const Text(
-                    "Post",
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
-                  ),
-                )
-              ],
+              automaticallyImplyLeading: true,
+              centerTitle: true,
             ),
             // POST FORM
             body: Column(

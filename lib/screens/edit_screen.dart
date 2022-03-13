@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:talkr_demo/utils/colors.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -52,11 +53,19 @@ class _EditProfileState extends State<EditProfile> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        toolbarHeight: 35,
+        backgroundColor: Colors.deepPurpleAccent,
         title: const Text(
-          "Edit Page",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          "Edit",
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "Lato",
+            // fontStyle: FontStyle.italic,
+            fontSize: 20.0,
+          ),
         ),
+        automaticallyImplyLeading: true,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -142,7 +151,12 @@ class _EditProfileState extends State<EditProfile> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.deepPurpleAccent),
+                      MaterialStateProperty.all(Colors.deepPurpleAccent),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   create();
@@ -152,8 +166,8 @@ class _EditProfileState extends State<EditProfile> {
                 child: Text(
                   "Submit",
                   style: TextStyle(
-                      color: Colors.black,
-                      backgroundColor: Colors.deepPurpleAccent),
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -164,7 +178,12 @@ class _EditProfileState extends State<EditProfile> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.deepPurpleAccent),
+                      MaterialStateProperty.all(Colors.deepPurpleAccent),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   update();
@@ -186,7 +205,12 @@ class _EditProfileState extends State<EditProfile> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.deepPurpleAccent),
+                      MaterialStateProperty.all(Colors.deepPurpleAccent),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   delete();
