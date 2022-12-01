@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:talkr_demo/utils/colors.dart';
 import 'package:talkr_demo/utils/global_variable.dart';
 import 'package:talkr_demo/widgets/post_card.dart';
-import 'package:talkr_demo/widgets/progress.dart';
 import 'chat_screen.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -43,7 +41,13 @@ class _FeedScreenState extends State<FeedScreen> {
                     Icons.messenger_outline,
                     color: primaryColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ChatScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

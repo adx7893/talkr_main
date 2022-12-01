@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:talkr_demo/resources/auth_methods.dart';
 import 'package:talkr_demo/responsive/mobile_screen_layout.dart';
@@ -9,7 +8,6 @@ import 'package:talkr_demo/responsive/web_screen_layout.dart';
 import 'login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:talkr_demo/utils/colors.dart';
-import 'package:talkr_demo/utils/global_variable.dart';
 import 'package:talkr_demo/utils/utils.dart';
 import 'package:talkr_demo/widgets/text_field_input.dart';
 
@@ -145,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             fontStyle: FontStyle.normal),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Stack(

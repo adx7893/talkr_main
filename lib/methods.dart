@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:talkr_demo/chat/DatabaseManager.dart';

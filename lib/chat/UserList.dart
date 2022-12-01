@@ -1,7 +1,11 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'DatabaseManager.dart';
 import 'package:flutter/material.dart';
 
 class UserList extends StatefulWidget {
+  const UserList({Key? key}) : super(key: key);
+
   @override
   State<UserList> createState() => _UserListState();
 }
@@ -27,6 +31,7 @@ class _UserListState extends State<UserList> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +43,7 @@ class _UserListState extends State<UserList> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         color: Colors.white,
         child: ListView.builder(
             itemCount: userProfileList.length,
@@ -49,7 +54,7 @@ class _UserListState extends State<UserList> {
                     child: ListTile(
                       title: Text('${userProfileList[index]['name']}'),
                       subtitle: Text('${userProfileList[index]['email']}'),
-                      leading: CircleAvatar(
+                      leading: const CircleAvatar(
                         child: Image(
                           image: AssetImage("assets/images/clock.jpeg"),
                         ),

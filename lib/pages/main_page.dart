@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'register_page.dart';
 import 'login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
